@@ -17,18 +17,19 @@ composer require gorogoroyasu/garak
 ```
 
 ## usage
-just add few lines.
+just add few lines in AppController and bootstrap.php.
 ```
-public class appController extends Controller
-{
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('Garak.Garak');
-    }
-}
+// in bootstrap.php
+Plugin::load('Garak', ['bootstrap' => true]);
 
-public function redirect($url, $status = null, $exit = true){
+// in AppController.php
+public function initialize()
+{
+    parent::initialize();
+    $this->loadComponent('Garak.Garak');
+}
+public function redirect($url, $status = null, $exit = true)
+{
     $url = $this->Garak->generateRedirectUrl($url);
     parent::redirect($url, $status, $exit);
 }
