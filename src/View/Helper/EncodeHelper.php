@@ -6,6 +6,7 @@ use Cake\View\View;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Event\Event;
+use Garak\Garak\Detector;
 
 /**
  * Escape helper
@@ -14,17 +15,15 @@ use Cake\Event\Event;
  */
 class EncodeHelper extends Helper
 {
-
-    private $charset = "UTF-8";
-
-    public function initialize(array $array)
-    {
-        $this->charset = Configure::read('Garak.charset');
-    }
-
+    /**
+     * afterLayout description
+     * @param  Event  $Event      [description]
+     * @param  [type] $layoutFile [description]
+     * @return [type]             [description]
+     */
     public function afterLayout(Event $Event, $layoutFile)
     {
-        if ($this->charset !== "UTF-8") {
+        if (Detector::characterCode() !== "UTF-8") {
             $content = $Event->subject->Blocks->get('content');
             $encoded = mb_convert_encoding($content, "shift_jis", "utf-8");
             $Event->subject->Blocks->set('content', $encoded);
