@@ -28,11 +28,18 @@ public function initialize()
     parent::initialize();
     $this->loadComponent('Garak.Garak');
 }
-public function redirect($url, $status = null, $exit = true)
+
+public function beforeRedirect(Event $Event, $url, Response $response)
 {
     $url = $this->Garak->generateRedirectUrl($url);
-    parent::redirect($url, $status, $exit);
 }
+
+// The line below was the wrong statement. 
+// public function redirect($url, $status = null, $exit = true)
+// {
+//     $url = $this->Garak->generateRedirectUrl($url);
+//    parent::redirect($url, $status, $exit);
+//}
 
 ```
 ## recomendation
