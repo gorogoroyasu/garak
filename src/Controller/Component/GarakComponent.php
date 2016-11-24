@@ -4,7 +4,6 @@ namespace Garak\Controller\Component;
 
 use Garak\Garak\Detector;
 use Cake\Controller\Component;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 
 class GarakComponent extends Component
@@ -21,20 +20,24 @@ class GarakComponent extends Component
     public function startup($event)
     {
         $event->subject->helpers += [
-            'Garak.Encode'
+            'Garak.Encode',
         ];
     }
 
-
     /**
-    *  Yak から流用。
-    *  たぶん、 $url['?'] にsession_name と session_id を持たせる処理
-    *  NOTE: http://takagi-hiromitsu.jp/diary/20100520.html#p01(2010年5月現在で、Docomo以外はCookie に対応してるっぽい。が、ガラケーは基本これで。)
-    * generateRedirectUrl
-    *
-    * @param $url
-    * @return $url
-    */
+     *  brought from github.com/k1LoW/Yak
+     *  if the UA was GaraK, URL will hold the Session ID on its url.
+     *  NOTE: http://takagi-hiromitsu.jp/diary/20100520.html#p01
+     *  the article above says that we can use cookie except for Docomo's Garak,
+     *  though because of the article is very old and for safety,
+     *  every GaraK will hold its Session ID on their URL.
+     *
+     * generateRedirectUrl
+     *
+     * @param $url
+     *
+     * @return $url
+     */
     public function generateRedirectUrl($url)
     {
         if (Detector::isGarak()) {
@@ -49,24 +52,30 @@ class GarakComponent extends Component
                 } else {
                     $url .= '&';
                 }
-                $url .= sprintf("%s=%s", session_name(), urlencode(session_id()));
+                $url .= sprintf('%s=%s', session_name(), urlencode(session_id()));
             }
+
             return $url;
         }
+
         return $url;
     }
 
     /**
-     * TODO: beforeRender で何かやってるので調べる。
+     * beforeRender determine the response type and characterCode.
      *
+     * @param Event $Event [description]
+     *
+     * @return [type] [description]
      */
-     public function beforeRender(Event $Event) {
-         if (Detector::isGarak()) {
-             $this->response->type('xhtml');
-             $this->response->charset('Shift_JIS');
-         } else {
-             $this->response->type('html');
-             $this->response->charset('UTF-8');
-         }
-     }
- }
+    public function beforeRender(Event $Event)
+    {
+        if (Detector::isGarak()) {
+            $this->response->type('xhtml');
+            $this->response->charset('Shift_JIS');
+        } else {
+            $this->response->type('html');
+            $this->response->charset('UTF-8');
+        }
+    }
+}
