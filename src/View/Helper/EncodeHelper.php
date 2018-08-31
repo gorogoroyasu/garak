@@ -22,12 +22,13 @@ class EncodeHelper extends Helper
      *
      * @return [type] [description]
      */
-    public function afterLayout(Event $Event, $layoutFile)
+    public function afterLayout(Event $event, $layoutFile)
     {
         if (Detector::characterCode() !== 'UTF-8') {
-            $content = $Event->subject->Blocks->get('content');
-            $encoded = mb_convert_encoding($content, 'shift_jis', 'utf-8');
-            $Event->subject->Blocks->set('content', $encoded);
+            $content = $event->getSubject()->Blocks->get('content');
+            $encoded = mb_convert_kana($content, "ka", "UTF-8");
+            $encoded = mb_convert_encoding($encoded, 'shift_jis', 'utf-8');
+            $event->getSubject()->Blocks->set('content', $encoded);
         }
     }
 }
