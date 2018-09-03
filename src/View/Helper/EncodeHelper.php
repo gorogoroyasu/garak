@@ -18,11 +18,10 @@ class EncodeHelper extends Helper
      * afterLayout convert utf-8 to shift_jis.
      *
      * @param Event  $event      [description]
-     * @param [type] $layoutFile [description]
      *
      * @return [type] [description]
      */
-    public function afterLayout(Event $event, $layoutFile)
+    public function afterLayout(Event $event)
     {
         if (Detector::characterCode() !== 'UTF-8') {
             $content = $event->getSubject()->Blocks->get('content');

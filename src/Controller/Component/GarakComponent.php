@@ -8,8 +8,6 @@ use Cake\Event\Event;
 
 class GarakComponent extends Component
 {
-    private $category = 'pc';
-
     public function initialize(array $array)
     {
         $this->getController()->getSession()->start();
