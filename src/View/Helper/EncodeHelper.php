@@ -17,7 +17,7 @@ class EncodeHelper extends Helper
     /**
      * afterLayout convert utf-8 to shift_jis.
      *
-     * @param Event  $Event      [description]
+     * @param Event  $event      [description]
      * @param [type] $layoutFile [description]
      *
      * @return [type] [description]

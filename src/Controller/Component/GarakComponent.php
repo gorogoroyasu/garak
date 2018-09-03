@@ -62,12 +62,13 @@ class GarakComponent extends Component
     /**
      * beforeRender determine the response type and characterCode.
      *
-     * @param Event $Event [description]
+     * @param Event $event [description]
      *
      * @return [type] [description]
      */
-    public function beforeRender(Event $Event)
+    public function beforeRender(Event $event)
     {
+        parent::beforeRender($event);
         if (Detector::isGarak()) {
             $this->getController()->response->withType('xhtml');
             $this->getController()->response->withCharset('Shift_JIS');
