@@ -1,0 +1,7 @@
+build:
+    environment:
+        php:
+            version: 7.2
+    tests:
+        override:
+            command: "php -v"

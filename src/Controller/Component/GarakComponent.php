@@ -8,18 +8,14 @@ use Cake\Event\Event;
 
 class GarakComponent extends Component
 {
-    private $category = 'pc';
-
     public function initialize(array $array)
     {
-        // TODO: Image 系の何か。何をやってるかわからないのでいつか実装する。
-        // $this->emoji->setImageUrl(Router::url('/') . 'yak/img/');
-        $this->request->session()->start();
+        $this->getController()->getSession()->start();
     }
 
     public function startup($event)
     {
-        $event->subject->helpers += [
+        $event->getSubject()->helpers += [
             'Garak.Encode',
         ];
     }
@@ -64,18 +60,19 @@ class GarakComponent extends Component
     /**
      * beforeRender determine the response type and characterCode.
      *
-     * @param Event $Event [description]
+     * @param Event $event [description]
      *
      * @return [type] [description]
      */
-    public function beforeRender(Event $Event)
+    public function beforeRender(Event $event)
     {
+        parent::beforeRender($event);
         if (Detector::isGarak()) {
-            $this->response->type('xhtml');
-            $this->response->charset('Shift_JIS');
+            $this->getController()->response->withType('xhtml');
+            $this->getController()->response->withCharset('Shift_JIS');
         } else {
-            $this->response->type('html');
-            $this->response->charset('UTF-8');
+            $this->getController()->response->withType('html');
+            $this->getController()->response->withCharset('UTF-8');
         }
     }
 }

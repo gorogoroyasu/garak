@@ -29,7 +29,7 @@ public function initialize()
     $this->loadComponent('Garak.Garak');
 }
 
-public function beforeRedirect(Event $Event, $url, Response $response)
+public function beforeRedirect(Event $event, $url, Response $response)
 {
     $url = $this->Garak->generateRedirectUrl($url);
 }
