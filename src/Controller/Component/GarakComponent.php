@@ -10,7 +10,7 @@ class GarakComponent extends Component
 {
     public function initialize(array $array)
     {
-        $this->getController()->getSession()->start();
+        $this->getController()->getRequest()->getSession()->start();
     }
 
     public function startup($event)
@@ -66,7 +66,6 @@ class GarakComponent extends Component
      */
     public function beforeRender(Event $event)
     {
-        parent::beforeRender($event);
         if (Detector::isGarak()) {
             $this->getController()->response->withType('xhtml');
             $this->getController()->response->withCharset('Shift_JIS');
