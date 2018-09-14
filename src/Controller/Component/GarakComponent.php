@@ -67,11 +67,15 @@ class GarakComponent extends Component
     public function beforeRender(Event $event)
     {
         if (Detector::isGarak()) {
-            $this->getController()->response->withType('xhtml');
-            $this->getController()->response->withCharset('Shift_JIS');
+            $this->getController()->response = $this->getController()
+                ->response
+                ->withType('xhtml')
+                ->withCharset('Shift_JIS');
         } else {
-            $this->getController()->response->withType('html');
-            $this->getController()->response->withCharset('UTF-8');
+            $this->getController()->response = $this->getController()
+                ->response
+                ->withType('html')
+                ->withCharset('UTF-8');
         }
     }
 }
