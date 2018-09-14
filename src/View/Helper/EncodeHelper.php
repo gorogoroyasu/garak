@@ -21,7 +21,7 @@ class EncodeHelper extends Helper
      *
      * @return [type] [description]
      */
-    public function afterLayout(Event $event)
+    public function afterLayout(Event $event, $layoutFile)
     {
         if (Detector::characterCode() !== 'UTF-8') {
             $content = $event->getSubject()->Blocks->get('content');
